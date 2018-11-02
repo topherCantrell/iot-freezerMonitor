@@ -4,10 +4,14 @@
   - Add the following ONBOOT.sh script to /home/pi and make it executable:
   
 #!/bin/bash
-cd /home/pi
-python3 temperature.py
+cd /home/pi/home-freezerMonitor
+python3 store_adafruit_main.py
   
 """
+
+import adafruit_io
+import credentials
+io = adafruit_io.AdafruitIO('topher_cantrell',credentials.AIO)
 
 import smbus
 import time
@@ -15,17 +19,10 @@ import socket
 import json
 import datetime
 
-import requests
-
 T_SLEEP  = 60*5
 I2C_ADDR = 0x18
 
-post_headers = {
-    'X-AIO-Key':' SECRET KEY GOES HERE ', 
-    'Content-Type':'application/json'
-}
-
-post_url = 'https://io.adafruit.com/api/v2/topher_cantrell/feeds/freezer-temperature/data'
+#post_url = 'https://io.adafruit.com/api/v2/topher_cantrell/feeds/freezer-temperature/data'
 
 bus = smbus.SMBus(1)
 
@@ -50,15 +47,7 @@ while True:
     if tsign:
         # add in the sign if it is negative
         temp -= 256.0    
-              
-    #print(temp)    
     
-    msg = {
-        'created_at' : str(datetime.datetime.now(datetime.timezone.utc).isoformat()),
-        'value' : str(temp)
-        }
-    
-    r = requests.post(post_url,data=json.dumps(msg),headers=post_headers)
-    #print(r.text)
-       
+    io.add_data_retry('freezer-temperature',temp)          
+           
     time.sleep(T_SLEEP)
