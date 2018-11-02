@@ -27,7 +27,7 @@ class AdafruitIO:
         '''
         
         post_headers = {
-            'X-AIO-Key': key, 
+            'X-AIO-Key': self._key, 
             'Content-Type':'application/json'
         }
         data = {'value' : value}

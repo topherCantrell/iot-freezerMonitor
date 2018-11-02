@@ -13,3 +13,6 @@ https://cdn-shop.adafruit.com/datasheets/MCP9808.pdf
 i2cdetect -y 1
 i2cget -y 1 0x18 5 w
 ```
+## Schematic
+
+![](art/schematic.jpg)
