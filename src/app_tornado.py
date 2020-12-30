@@ -5,7 +5,7 @@
   
 #!/bin/bash
 cd /home/pi/home-freezerMonitor
-python3 app_monitor.py  
+python3 app_tornado.py  
 """
 
 import smbus

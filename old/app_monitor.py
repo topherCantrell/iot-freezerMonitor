@@ -10,7 +10,7 @@ python3 app_monitor.py
 
 import smbus
 import time
-import ez_post
+import OLD_ez_post
 
 I2C_ADDR = 0x18
 
@@ -48,7 +48,7 @@ while True:
         time.sleep(10)   
      
     try:
-        ez_post.post_to_home_gateway('freezer',readings)
+        OLD_ez_post.post_to_home_gateway('freezer',readings)
     except OSError:
         pass # Ignore connection error in case the server is down temporarily
            
